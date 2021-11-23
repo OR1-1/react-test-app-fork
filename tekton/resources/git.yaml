@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
   # The name of the pipeline resource
-  name: example-git
+  name: react-test-app-fork-git
 spec:
   type: git
   params:
@@ -11,4 +11,4 @@ spec:
     value: main
   # The URL of the repository
   - name: url
-    value: https://github.com/tektoncd/website/
+    value: https://github.com/OR1-1/react-test-app-fork
