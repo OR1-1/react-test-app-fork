@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s/*
+      # - ./k8s/react-test-app-deployment.yml
+      # - ./k8s/react-test-app-cluster-ip.yml
+      # - ./k8s/ingress-service.yml
+build:
+  local:
+    push: false
+  artifacts:
+    - image: or11/react-test-app
+      context: .
+      docker:
+        dockerfile: Dockerfile
+        # noCache: false
+        # squash: false
+      sync:
+        # infer: []
+        manual:
+          - dest: /app/src/
+            src: '**/*.js'
+          - dest: /app/src/
+            src: '**/*.css'
+          - dest: /app/src/
+            src: '**/*.html'

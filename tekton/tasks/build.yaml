@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-react-test-app
+spec:
+  resources:
+    inputs:
+      - name: git
+        type: git
+  params:
+  - name: dockerfilePath
+    type: string
+    description: The path to the dockerfile
+    default: /workspace/git/Dockerfile
+
+  - name: srcPath
+    type: string
+    description: The path to the source code
+    default: /workspace/git/src
+
+  - name: tag
+    type: string
+    description: Docker build context
+
+  - name: imageName
+    type: string
+    description: The name of built image
+    default: or11/react-test-app
+  steps:
+  - name: docker
+    image: docker
+    command:
+      - docker
+    args:
+    - build
+    - -f
+    - $(params.dockerfilePath)
+    - -t
+    - $(params.imageName):$(params.tag)
