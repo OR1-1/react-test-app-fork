@@ -17,10 +17,10 @@ spec:
     type: string
     description: The path to the source code
     default: /workspace/git/src
-
-  - name: tag
+  - name: contextPath
     type: string
     description: Docker build context
+    default: /workspace/git
 
   - name: imageName
     type: string
@@ -36,4 +36,17 @@ spec:
     - -f
     - $(params.dockerfilePath)
     - -t
-    - $(params.imageName):$(params.tag)
+    - $(params.imageName)
+    - $(params.contextPath)
+    volumeMounts:
+    - name: dsocket
+      mountPath: /var/run/docker.sock
+    - name: dlib
+      mountPath: /var/lib/docker
+  volumes:
+  - name: dsocket
+    persistentVolumeClaim:
+      claimName: dsocket-vol-claim
+  - name: dlib
+    persistentVolumeClaim:
+      claimName: dlib-vol-claim

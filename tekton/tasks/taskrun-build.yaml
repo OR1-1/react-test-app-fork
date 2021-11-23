@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  creationTimestamp: null
+  generateName: build-react-test-app-run-
+  namespace: default
+spec:
+  params:
+  - name: dockerfilePath
+    value: /workspace/git/Dockerfile
+  - name: imageName
+    value: or11/react-test-app
+  - name: tag
+    value: 1.0.0
+  resources:
+    inputs:
+    - name: git
+      resourceRef:
+        name: react-test-app-fork-git
+  serviceAccountName: ""
+  taskRef:
+    name: build-react-test-app
+status:
+  podName: ""
